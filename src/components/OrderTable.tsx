@@ -360,6 +360,7 @@ export default function OrderTable() {
     const rows = JSON.stringify(paginatorController?.rows)
 
 
+    console.log("add something.")
     return (
         <div className="card">
             <DataTable value={orderData} dataKey="id" filters={filters} filterDisplay="row"
