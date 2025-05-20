@@ -85,7 +85,7 @@ export default function OrderTable() {
 
 
     useEffect(() => {
-        let pages = Math.ceil(pageNumber / limitData + 1);
+        let pages = Math.ceil(pageNumber / limitData );
         setCurrentPage(pages);
     }, [pageNumber, limitData])
 
@@ -113,7 +113,7 @@ export default function OrderTable() {
         const fetchData = async () => {
             setTableLoading(true);
             try {
-                const response = await fetch(`${baseUrl.url}/api/order?page=${paginatorController?.page}&size=${paginatorController?.rows}${filterUrl ? filterUrl : ''}`, {headers: {Authorization: `bearer ${baseUrl.token}`}});
+                const response = await fetch(`${baseUrl.url}/api/order?page=${currentPage}&size=${limitData}${filterUrl ? filterUrl : ''}`, {headers: {Authorization: `bearer ${baseUrl.token}`}});
                 if (response.ok) {
                     const data = await response.json();
                     setOrderData(data?.data?.items);
@@ -370,6 +370,17 @@ export default function OrderTable() {
                        emptyMessage="No Order found."
                        expandedRows={expandedRows} onRowToggle={(e) => setExpandedRows(e.data)}
                        rowExpansionTemplate={rowExpansionTemplate}
+                       paginator={orderData.length > 0}
+                       rows={limitData}
+                       totalRecords={totalData}
+                       lazy
+                       first={pageNumber}
+                       onPage={(e) => {
+                           console.log(e)
+                           setPageNumber(e.first);
+                           setLimitData(e.rows);
+                       }}
+
 
 
             >
