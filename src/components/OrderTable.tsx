@@ -3,7 +3,6 @@ import {
     DataTable,
     DataTableExpandedRows,
     DataTableFilterMeta,
-    DataTableStateEvent,
     DataTableValueArray
 } from 'primereact/datatable';
 import {Column, ColumnFilterElementTemplateOptions} from 'primereact/column';
@@ -87,7 +86,7 @@ export default function OrderTable() {
     useEffect(() => {
         let pages = Math.ceil(pageNumber / limitData );
         setCurrentPage(pages);
-    }, [pageNumber, limitData])
+    }, [pageNumber])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -135,7 +134,7 @@ export default function OrderTable() {
         };
 
         fetchData().then();
-    }, [filterUrl, currentPage]);
+    }, [filterUrl, currentPage, limitData]);
 
     if (isLoading) {
         return <div className={'flex h-screen justify-content-center align-content-center'}>
@@ -360,7 +359,7 @@ export default function OrderTable() {
     const rows = JSON.stringify(paginatorController?.rows)
 
 
-    console.log("add something.")
+    console.log(limitData)
     return (
         <div className="card">
             <DataTable value={orderData} dataKey="id" filters={filters} filterDisplay="row"
@@ -375,6 +374,7 @@ export default function OrderTable() {
                        totalRecords={totalData}
                        lazy
                        first={pageNumber}
+                       rowsPerPageOptions={[10, 20, 30, 40]}
                        onPage={(e) => {
                            console.log(e)
                            setPageNumber(e.first);

@@ -16,6 +16,7 @@ const Home = () => {
     });
 
 
+
     const buildOrderFilterQuery = (filterMeta: any) => {
         const filterParams: any[] = [];
 
@@ -53,7 +54,6 @@ const Home = () => {
         const newFilters = e.filters;
 
 
-        console.log("new filters", newFilters);
 
         setFilters(newFilters);
         const url = buildOrderFilterQuery(newFilters);
